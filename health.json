@@ -1,10 +1,31 @@
 [
     {
+        "date": "2025-01-01",
+        "steps": 7306,
+        "heart_rate": 79,
+        "sleep_hours": 7.6,
+        "bmi": 27.6
+    },
+    {
+        "date": "2025-01-02",
+        "steps": 5050,
+        "heart_rate": 66,
+        "sleep_hours": 8.6,
+        "bmi": 27.6
+    },
+    {
+        "date": "2025-01-03",
+        "steps": 11216,
+        "heart_rate": 90,
+        "sleep_hours": 8.9,
+        "bmi": 27.6
+    },
+    {
         "date": "2025-01-04",
         "steps": 8866,
         "heart_rate": 80,
         "sleep_hours": 5.8,
-        "bmi": 27.3
+        "bmi": 27.5
     },
     {
         "date": "2025-01-05",
@@ -46,14 +67,14 @@
         "steps": 4217,
         "heart_rate": 68,
         "sleep_hours": 5.9,
-        "bmi": 27.9
+        "bmi": 27.6
     },
     {
         "date": "2025-01-11",
         "steps": 10678,
         "heart_rate": 81,
         "sleep_hours": 8.2,
-        "bmi": 27.9
+        "bmi": 27.8
     },
     {
         "date": "2025-01-12",
@@ -606,27 +627,6 @@
         "steps": 11726,
         "heart_rate": 80,
         "sleep_hours": 6.7,
-        "bmi": 27.6
-    },
-    {
-        "date": "2025-04-01",
-        "steps": 7306,
-        "heart_rate": 79,
-        "sleep_hours": 7.6,
-        "bmi": 27.6
-    },
-    {
-        "date": "2025-04-02",
-        "steps": 5050,
-        "heart_rate": 66,
-        "sleep_hours": 8.6,
-        "bmi": 27.6
-    },
-    {
-        "date": "2025-04-03",
-        "steps": 11216,
-        "heart_rate": 90,
-        "sleep_hours": 8.9,
         "bmi": 27.6
     }
 ]
