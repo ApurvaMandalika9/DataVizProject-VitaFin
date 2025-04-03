@@ -9,16 +9,115 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.prod.js"></script>
 </head>
 
+<style>
+    .navbar-custom {
+        background-color: #004a7c;
+    }
+
+    .navbar-custom .navbar-brand, 
+    .navbar-custom .nav-link {
+        color: white;
+    }
+
+    .btn-custom {
+        background-color: #004a7c;
+        color: white;
+    }
+</style>
+
+
 <body>
-    <p>VitaFin </p>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>VitaFin</title>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f0f0f0;
+                margin: 0;
+                padding: 0;
+            }
 
-    <!-- Health Form Section -->
-    <!-- Budget Form Section -->
+            .container {
+                text-align: center;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                margin: 0 auto;
+                max-width: 400px;
+                margin-top: 50px;
+            }
 
-    <!-- JavaScript Modules -->
-    <script src="{{ url_for('static', filename='api.js') }}"></script>
-    <script src="{{ url_for('static', filename='form-handler.js') }}"></script>
-    <script src="{{ url_for('static', filename='visualizer-health.js') }}"></script>
-    <script src="{{ url_for('static', filename='visualizer-budget.js') }}"></script>
-</body>
+            h1 {
+                color: #004a7c;
+                font-size: 1.3em;
+                margin-bottom: 15px;
+            }
+
+            h2 {
+                color: #333;
+                font-size: 1.1em;
+                margin: 15px 0;
+            }
+
+            .button-container {
+                margin-top: 30px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .health-button, .budget-button {
+                background-color: #004a7c;
+                color: #fff;
+                border: none;
+                padding: 12px 24px;
+                margin: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 18px;
+                transition: background-color 0.3s ease;
+            }
+
+            .health-button:hover, .budget-button:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Welcome to VitaFin Homepage</h1>
+            <h2>Your One-Stop Solution for Managing Wellness</h2>
+            <h2>Discover the Easiest Way to Keep Track of Your Health and Budget</h2>
+            <div class="button-container">
+                <a href="{{ url_for('health') }}">
+                    <button class="health-button">Health</button>
+                </a>
+                <a href="{{ url_for('budget') }}">
+                    <button class="budget-button">Budget</button>
+                </a>
+            </div>
+
+        
+            <h2>Provide Input Data using the form: </h2>
+            <div class="button-container">
+                <a href="{{ url_for('form') }}">
+                    <button class="health-button">Form</button>
+                </a>
+            </div>
+        </div>
+
+        <!-- Health Form Section -->
+        <!-- Budget Form Section -->
+
+        <!-- JavaScript Modules
+        <script src="{{ url_for('static', filename='api.js') }}"></script>
+        <script src="{{ url_for('static', filename='form-handler.js') }}"></script>
+        <script src="{{ url_for('static', filename='visualizer-health.js') }}"></script>
+        <script src="{{ url_for('static', filename='visualizer-budget.js') }}"></script> -->
+
+        
+    </body>
 </html>

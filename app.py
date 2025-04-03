@@ -35,17 +35,29 @@ def add_budget():
     save_json(BUDGET_FILE, data)
     return jsonify({'message': 'Budget data added'})
 
-@app.route('/health')
+@app.route('/api/health')
 def get_health():
     return jsonify(load_json(HEALTH_FILE))
 
-@app.route('/budget')
+@app.route('/health')
+def health():
+    return render_template('health.html')
+
+@app.route('/api/budget')
 def get_budget():
     return jsonify(load_json(BUDGET_FILE))
 
-@app.route('/reference-health')
+@app.route('/budget')
+def budget():
+    return render_template('budget.html')
+
+@app.route('/api/reference-health')
 def get_reference_health():
     return jsonify(load_json(REFERENCE_HEALTH_FILE))
+
+@app.route('/form')
+def form():
+    return render_template('form.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
