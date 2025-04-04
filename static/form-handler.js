@@ -1,4 +1,4 @@
-// For handling form submissions
+// For handling health form submissions
 document.getElementById('healthSubmitBtn')?.addEventListener('click', () => {
     const form = document.getElementById('health-data-form');
 
@@ -32,5 +32,39 @@ document.getElementById('healthSubmitBtn')?.addEventListener('click', () => {
     .catch(error => {
         console.error('Error:', error);
         alert('Error submitting health data');
+    });
+});
+
+// For handling budget form submissions
+document.getElementById('budgetSubmitBtn')?.addEventListener('click', () => {
+    const form = document.getElementById('budget-data-form');
+
+    const type = document.getElementById('budget-type').value;
+    const category = type === 'income' 
+        ? 'salary' 
+        : document.getElementById('category').value;
+
+    const budgetData = {
+        date: document.getElementById('budget-date').value,
+        type: type,
+        category: category,
+        description: document.getElementById('description').value || "No description",
+        amount: parseFloat(document.getElementById('amount').value)
+    };
+
+    fetch('/add-budget', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(budgetData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Budget data submitted successfully!');
+        form.reset();
+        document.getElementById('category').disabled = true;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error submitting budget data');
     });
 });
