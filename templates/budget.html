@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VitaFin - Budget Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            max-width: 800px;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #004a7c;
+        }
+
+        .back-button {
+            background-color: #004a7c;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Budget Tracking Dashboard</h1>
+        <p>This is the budget tracking page. Your financial metrics will be displayed here.</p>
+        
+        <div id="budget-metrics">
+            <!-- Budget metrics will be loaded here via JavaScript -->
+            <p>Loading budget data...</p>
+        </div>
+        
+        <a href="{{ url_for('index') }}">
+            <button class="back-button">Back to Home</button>
+        </a>
+    </div>
+
+    <script>
+        // Simple script to fetch budget data
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/api/budget')
+                .then(response => response.json())
+                .then(data => {
+                    const metricsDiv = document.getElementById('budget-metrics');
+                    if (data.length === 0) {
+                        metricsDiv.innerHTML = '<p>No budget data available yet. Please add data using the form.</p>';
+                    } else {
+                        let html = '<h2>Your Budget Data</h2>';
+                        html += '<ul>';
+                        data.forEach(item => {
+                            html += `<li>${JSON.stringify(item)}</li>`;
+                        });
+                        html += '</ul>';
+                        metricsDiv.innerHTML = html;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching budget data:', error);
+                    document.getElementById('budget-metrics').innerHTML = 
+                        '<p>Error loading budget data. Please try again later.</p>';
+                });
+        });
+    </script>
+</body>
+</html>
