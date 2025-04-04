@@ -136,7 +136,7 @@
                     <input type="number" id="sleep" name="sleep" step="0.1" required>
                 </div>
                 
-                <button type="button" onclick="submitHealthData()">Submit Health Data</button>
+                <button type="button" id="healthSubmitBtn">Submit Health Data</button>
             </form>
         </div>
         
@@ -180,7 +180,7 @@
                     <input type="text" id="description" name="description">
                 </div>
                 
-                <button type="button" onclick="submitBudgetData()">Submit Budget Data</button>
+                <button type="button" id="budgetSubmitBtn">Submit Budget Data</button>
             </form>
         </div>
         
@@ -189,6 +189,7 @@
         </a>
     </div>
 
+    <script src="{{ url_for('static', filename='form-handler.js') }}"></script>
     <script>
         function showForm(formType) {
             document.querySelectorAll('.form-section').forEach(form => {
@@ -201,62 +202,6 @@
             event.target.classList.add('active');
         }
         
-        function submitHealthData() {
-            const form = document.getElementById('health-data-form');
-            
-            const healthData = {
-                date: document.getElementById('health-date').value,
-                weight: parseFloat(document.getElementById('weight').value),
-                steps: parseInt(document.getElementById('steps').value),
-                sleep: parseFloat(document.getElementById('sleep').value)
-            };
-            
-            fetch('/add-health', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(healthData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Health data submitted successfully!');
-                form.reset();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error submitting health data');
-            });
-        }
-        
-        function submitBudgetData() {
-            const form = document.getElementById('budget-data-form');
-            
-            const budgetData = {
-                date: document.getElementById('budget-date').value,
-                category: document.getElementById('category').value,
-                amount: parseFloat(document.getElementById('amount').value),
-                description: document.getElementById('description').value
-            };
-            
-            fetch('/add-budget', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(budgetData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Budget data submitted successfully!');
-                form.reset();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error submitting budget data');
-            });
-        }
-
         function toggleCategory() {
             const typeSelect = document.getElementById('budget-type');
             const categorySelect = document.getElementById('category');
