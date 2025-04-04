@@ -117,8 +117,18 @@
                 </div>
                 
                 <div class="form-group">
+                    <label for="height">Height (cm):</label>
+                    <input type="number" id="height" name="height" step="0.1" required>
+                </div>
+
+                <div class="form-group">
                     <label for="steps">Steps:</label>
                     <input type="number" id="steps" name="steps" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="heartrate">HeartRate:</label>
+                    <input type="number" id="heartrate" name="heartrate" required>
                 </div>
                 
                 <div class="form-group">
@@ -137,9 +147,18 @@
                     <input type="date" id="budget-date" name="date" required>
                 </div>
                 
+                <div>
+                    <label for="budget-type">Type:</label>
+                    <select id="budget-type" name="type" required onchange="toggleCategory()">
+                        <option value="">Select a type</option>
+                        <option value="income">Income</option>
+                        <option value="expense">Expense</option>
+                    </select>
+                </div>
+
                 <div class="form-group">
                     <label for="category">Category:</label>
-                    <select id="category" name="category" required>
+                    <select id="category" name="category" required disabled>
                         <option value="">Select a category</option>
                         <option value="food">Food</option>
                         <option value="housing">Housing</option>
@@ -236,6 +255,18 @@
                 console.error('Error:', error);
                 alert('Error submitting budget data');
             });
+        }
+
+        function toggleCategory() {
+            const typeSelect = document.getElementById('budget-type');
+            const categorySelect = document.getElementById('category');
+
+            if (typeSelect.value === 'expense') {
+                categorySelect.disabled = false;
+            } else {
+                categorySelect.disabled = true;
+                categorySelect.value = '';
+            }
         }
     </script>
 </body>
