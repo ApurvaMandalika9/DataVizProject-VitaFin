@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify, render_template
 from healthapi import health_api
+from budgetapi import budget_api
 import json, os
 
 app = Flask(__name__)
-app.register_blueprint(health_api)
+app.register_blueprint(health_api, url_prefix='/api')
+app.register_blueprint(budget_api, url_prefix='/api')
 
 HEALTH_FILE = 'health.json'
 BUDGET_FILE = 'budget.json'
@@ -39,17 +41,9 @@ def add_budget():
     save_json(BUDGET_FILE, data)
     return jsonify({'message': 'Budget data added successfully.'})
 
-@app.route('/api/health')
-def get_health():
-    return jsonify(load_json(HEALTH_FILE))
-
 @app.route('/health')
 def health():
     return render_template('health.html')
-
-@app.route('/api/budget')
-def get_budget():
-    return jsonify(load_json(BUDGET_FILE))
 
 @app.route('/budget')
 def budget():
