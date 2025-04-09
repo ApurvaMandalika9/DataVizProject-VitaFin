@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VitaFin - Health Tracker</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -14,29 +14,133 @@
         }
 
         .container {
-            text-align: center;
-            background-color: #fff;
+            max-width: 1000px;
+            margin: 0 auto;
             padding: 20px;
+            background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin: 0 auto;
-            max-width: 800px;
             margin-top: 50px;
         }
 
         h1 {
+            text-align: center;
             color: #004a7c;
         }
 
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .calendar-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            gap: 15px;
+        }
+        
+        #calendar {
+            padding: 5px;
+            font-size: 14px;
+            width: 150px;
+        }
+        
+        .view-buttons button {
+            margin: 5px;
+            padding: 6px 12px;
+            font-size: 14px;
+            background-color: #004a7c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .view-buttons button:hover {
+            background-color: #0056b3;
+        }
+        
+        .charts-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+        
+        .chart-wrapper {
+            flex: 1 1 45%;
+            min-width: 300px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin-bottom: 20px;
+            height: 300px;
+        }
+        
+        .chart-wrapper canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .summary-stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            flex: 1 1 20%;
+            min-width: 150px;
+            background-color: #004a7c;
+            color: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+        
+        .stat-card.positive {
+            background-color: #4CAF50; /* Green for positive metrics */
+        }
+        
+        .stat-card.negative {
+            background-color: #F44336; /* Red for negative metrics */
+        }
+
+        .stat-card h3 {
+            margin-top: 0;
+            font-size: 16px;
+        }
+
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .stat-card .reference {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
         .back-button {
+            display: block;
+            margin: 20px auto 0;
             background-color: #004a7c;
             color: #fff;
             border: none;
             padding: 10px 20px;
-            margin: 10px;
             border-radius: 5px;
-            cursor: pointer;
             font-size: 16px;
+            cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
@@ -48,43 +152,60 @@
 <body>
     <div class="container">
         <h1>Health Tracking Dashboard</h1>
-        <p>This is the health tracking page. Your health metrics will be displayed here.</p>
-        
-        <div id="health-metrics">
-            <!-- Health metrics will be loaded here via JavaScript -->
-            <p>Loading health data...</p>
+
+        <div class="dashboard">
+            <div class="calendar-container">
+                <input type="date" id="calendar" />
+                <div class="view-buttons">
+                    <button onclick="showCharts('daily')">Daily</button>
+                    <button onclick="showCharts('monthly')">Monthly</button>
+                    <button onclick="showCharts('yearly')">Yearly</button>
+                </div>
+            </div>
+
+            <div class="summary-stats">
+                <div class="stat-card">
+                    <h3>Steps</h3>
+                    <div class="value" id="steps-value">-</div>
+                    <div class="reference" id="steps-reference">Ref: -</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Heart Rate</h3>
+                    <div class="value" id="heart-rate-value">-</div>
+                    <div class="reference" id="heart-rate-reference">Ref: -</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Sleep</h3>
+                    <div class="value" id="sleep-value">-</div>
+                    <div class="reference" id="sleep-reference">Ref: -</div>
+                </div>
+                <div class="stat-card">
+                    <h3>BMI</h3>
+                    <div class="value" id="bmi-value">-</div>
+                    <div class="reference" id="bmi-reference">Ref: -</div>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <canvas id="stepsChart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="heartRateChart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="sleepChart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="bmiChart"></canvas>
+                </div>
+            </div>
         </div>
-        
+
         <a href="{{ url_for('index') }}">
             <button class="back-button">Back to Home</button>
         </a>
     </div>
-
-    <script>
-        // Simple script to fetch health data
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('/api/health')
-                .then(response => response.json())
-                .then(data => {
-                    const metricsDiv = document.getElementById('health-metrics');
-                    if (data.length === 0) {
-                        metricsDiv.innerHTML = '<p>No health data available yet. Please add data using the form.</p>';
-                    } else {
-                        let html = '<h2>Your Health Data</h2>';
-                        html += '<ul>';
-                        data.forEach(item => {
-                            html += `<li>${JSON.stringify(item)}</li>`;
-                        });
-                        html += '</ul>';
-                        metricsDiv.innerHTML = html;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching health data:', error);
-                    document.getElementById('health-metrics').innerHTML = 
-                        '<p>Error loading health data. Please try again later.</p>';
-                });
-        });
-    </script>
+    <script src="{{ url_for('static', filename='visualizer-health.js') }}"></script>
 </body>
 </html>
