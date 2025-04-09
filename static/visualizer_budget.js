@@ -2,15 +2,20 @@ const { createApp, ref, onMounted } = Vue;
 
 createApp({
     setup() {
-        const selectedDate = ref(new Date());
-        const calendarValue = ref(new Date().toISOString().split('T')[0]);
+        const today = new Date();
+        today.setHours(12, 0, 0, 0);
+
+        const selectedDate = ref(today);
+        const calendarValue = ref(today.toISOString().split('T')[0]);
 
         const incomeInstance = ref(null);
         const categoryInstance = ref(null);
         const lineInstance = ref(null);
 
         const onCalendarChange = (e) => {
-            selectedDate.value = new Date(e.target.value);
+            // Parse date and set to 12:00 to avoid timezone offset errors
+            const selected = new Date(e.target.value + 'T12:00:00');
+            selectedDate.value = selected;
         };
 
         const formatRange = (viewType) => {
@@ -40,7 +45,6 @@ createApp({
             fetch(`/api/budget/income-vs-expense?start=${start}&end=${end}`)
                 .then(res => res.json())
                 .then(data => {
-                    console.log("Income vs Expense:", data);
                     const income = data.find(d => d.type === 'income')?.total || 0;
                     const expense = data.find(d => d.type === 'expense')?.total || 0;
                     renderIncomeExpenseChart(income, expense);
@@ -51,7 +55,6 @@ createApp({
             fetch(`/api/budget/expense-categories?start=${start}&end=${end}`)
                 .then(res => res.json())
                 .then(data => {
-                    console.log("Expense Categories:", data);
                     const categoryData = {};
                     data.forEach(item => {
                         categoryData[item.category] = item.total;
@@ -64,7 +67,6 @@ createApp({
             fetch(`/api/budget/net-trend?start=${start}&end=${end}&view=${viewType}`)
                 .then(res => res.json())
                 .then(data => {
-                    console.log("Net Trend:", data);
                     const labels = data.map(d => d[viewType]);
                     const values = data.map(d => d.net_balance);
                     renderLineChart(labels, values);
@@ -87,29 +89,15 @@ createApp({
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 10,
-                            bottom: 20
-                        }
-                    },
                     plugins: {
                         title: {
                             display: true,
                             text: 'Income vs Expense',
-                            font: {
-                                size: 16
-                            },
-                            padding: {
-                                bottom: 15
-                            }
+                            font: { size: 16 }
                         },
                         legend: {
                             position: 'bottom',
-                            labels: {
-                                boxWidth: 20,
-                                padding: 15
-                            }
+                            labels: { boxWidth: 20, padding: 15 }
                         }
                     }
                 }
@@ -134,29 +122,15 @@ createApp({
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 10,
-                            bottom: 20
-                        }
-                    },
                     plugins: {
                         title: {
                             display: true,
                             text: 'Expenses by Category',
-                            font: {
-                                size: 16
-                            },
-                            padding: {
-                                bottom: 15
-                            }
+                            font: { size: 16 }
                         },
                         legend: {
                             position: 'bottom',
-                            labels: {
-                                boxWidth: 12,
-                                padding: 15
-                            }
+                            labels: { boxWidth: 12, padding: 15 }
                         }
                     }
                 }
@@ -189,9 +163,7 @@ createApp({
                         title: {
                             display: true,
                             text: 'Net Amount Over Time',
-                            font: {
-                                size: 16
-                            }
+                            font: { size: 16 }
                         },
                         legend: {
                             position: 'top'
@@ -199,20 +171,11 @@ createApp({
                     },
                     scales: {
                         x: {
-                            grid: {
-                                display: true,
-                                color: 'rgba(0,0,0,0.05)'
-                            },
-                            ticks: {
-                                maxRotation: 45,
-                                minRotation: 45
-                            }
+                            grid: { display: true, color: 'rgba(0,0,0,0.05)' },
+                            ticks: { maxRotation: 45, minRotation: 45 }
                         },
                         y: {
-                            grid: {
-                                display: true,
-                                color: 'rgba(0,0,0,0.05)'
-                            },
+                            grid: { display: true, color: 'rgba(0,0,0,0.05)' },
                             beginAtZero: false
                         }
                     }
