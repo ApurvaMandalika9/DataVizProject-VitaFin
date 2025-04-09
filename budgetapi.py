@@ -16,6 +16,10 @@ def load_budget_data():
     with open(BUDGET_FILE, 'r') as f:
         return json.load(f)
 
+@budget_api.route('/budget', methods=['GET'])
+def get_budget():
+    return jsonify(load_budget_data())
+
 # 1. Expense Pie Chart by Category
 @budget_api.route('/budget/expense-categories', methods=['GET'])
 def expense_category_pie():
