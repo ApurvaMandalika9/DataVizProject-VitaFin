@@ -13,7 +13,7 @@ let chartInstances = {
 document.getElementById("calendar").valueAsDate = selectedDate;
 
 document.getElementById("calendar").addEventListener("change", function () {
-    selectedDate = new Date(this.value);
+    selectedDate = new Date(this.value + 'T12:00:00');
     showCharts(currentView);
 });
 
@@ -29,11 +29,11 @@ function getDateRange(view) {
     let startDate, endDate;
     
     if (view === 'daily') {
-        // For daily view, show ±15 days
+        // For daily view, show the selected day
         startDate = new Date(today);
-        startDate.setDate(today.getDate() - 15);
+        startDate.setDate(today.getDate());
         endDate = new Date(today);
-        endDate.setDate(today.getDate() + 15);
+        endDate.setDate(today.getDate());
     } else if (view === 'monthly') {
         // For monthly view, show the selected month
         startDate = new Date(today.getFullYear(), today.getMonth(), 1);
