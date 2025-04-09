@@ -5,7 +5,7 @@ import json, os
 
 app = Flask(__name__)
 app.register_blueprint(health_api, url_prefix='/api')
-app.register_blueprint(budget_api, url_prefix='/api')
+app.register_blueprint(budget_api, url_prefix='/api/budget') # Register budget API blueprint
 
 HEALTH_FILE = 'health.json'
 BUDGET_FILE = 'budget.json'

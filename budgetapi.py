@@ -21,7 +21,8 @@ def get_budget():
     return jsonify(load_budget_data())
 
 # 1. Expense Pie Chart by Category
-@budget_api.route('/budget/expense-categories', methods=['GET'])
+
+@budget_api.route('/expense-categories', methods=['GET'])
 def expense_category_pie():
     data = load_budget_data()
     start = request.args.get('start')
@@ -40,7 +41,8 @@ def expense_category_pie():
     return jsonify(result)
 
 # 2. Pie Chart: Income vs Expense
-@budget_api.route('/budget/income-vs-expense', methods=['GET'])
+
+@budget_api.route('/income-vs-expense', methods=['GET'])
 def income_vs_expense_pie():
     data = load_budget_data()
     start = request.args.get('start')
@@ -63,7 +65,8 @@ def income_vs_expense_pie():
     return jsonify(result)
 
 # 3. Net Balance Trend (daily, monthly, yearly)
-@budget_api.route('/budget/net-trend', methods=['GET'])
+
+@budget_api.route('/net-trend', methods=['GET'])
 def net_trend():
     data = load_budget_data()
     start_str = request.args.get('start')

@@ -3,117 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <title>Budget Tracking Dashboard</title>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Using Vue.js Framework -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+    <!-- Embedded Styles -->
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
         }
+
         .container {
-            max-width: 1000px;
-            margin: auto;
-            padding: 20px;
+        max-width: 1000px;
+        margin: auto;
+        padding: 20px;
         }
+
         h1 {
-            text-align: center;
-            color: #004a7c;
-            margin-bottom: 10px;
+        text-align: center;
+        color: #004a7c;
+        margin-bottom: 10px;
         }
+
         .dashboard {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
         }
+
         .calendar-container {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            gap: 15px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        gap: 15px;
         }
+
         #calendar {
-            padding: 5px;
-            font-size: 14px;
-            width: 150px;
+        padding: 5px;
+        font-size: 14px;
+        width: 150px;
         }
+
         .view-buttons button {
-            margin: 5px;
-            padding: 6px 12px;
-            font-size: 14px;
-            background-color: #004a7c;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+        margin: 5px;
+        padding: 6px 12px;
+        font-size: 14px;
+        background-color: #004a7c;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
         }
+
         .view-buttons button:hover {
-            background-color: #0056b3;
+        background-color: #0056b3;
         }
+
         .charts-container {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: flex-start;
-            gap: 15px; /*20*/
-            flex-wrap: nowrap;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: flex-start;
+        gap: 15px;
+        flex-wrap: nowrap;
         }
+
         .chart-wrapper {
-            flex: 1;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        flex: 1;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         }
 
         .pie-chart-wrapper {
-            flex: 2;
-            max-width: 250px;
-            height: 400px;
+        flex: 2;
+        max-width: 250px;
+        height: 400px;
         }
+
         .line-chart-wrapper {
-            flex: 3;
-            height: 400px;
+        flex: 3;
+        height: 400px;
         }
 
         .chart-wrapper canvas {
-            width: 100%;
-            max-height: 100%;
-            margin: auto;
+        width: 100%;
+        max-height: 100%;
+        margin: auto;
         }
+
         canvas {
-            width: 100%;
-            height: 100%;
+        width: 100%;
+        height: 100%;
         }
+
         .back-button {
-            display: block;
-            margin: 20px auto 0;
-            background-color: #004a7c;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
+        display: block;
+        margin: 20px auto 0;
+        background-color: #004a7c;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div id="app" class="container">
         <h1>Budget Tracking Dashboard</h1>
 
         <div class="dashboard">
             <div class="calendar-container">
-                <input type="date" id="calendar" />
+                <input type="date" id="calendar" :value="calendarValue" @change="onCalendarChange" />
                 <div class="view-buttons">
-                    <button onclick="showPieChart('day')">Day</button>
-                    <button onclick="showPieChart('month')">Month</button>
-                    <button onclick="showPieChart('year')">Year</button>
+                    <button @click="fetchBudgetData('day')">Day</button>
+                    <button @click="fetchBudgetData('month')">Month</button>
+                    <button @click="fetchBudgetData('year')">Year</button>
                 </div>
             </div>
 
@@ -135,211 +152,6 @@
         </a>
     </div>
 
-    <script>
-        let selectedDate = new Date();
-        
-        // Set today's date as default in the calendar
-        document.getElementById("calendar").valueAsDate = selectedDate;
-
-        document.getElementById("calendar").addEventListener("change", function () {
-            selectedDate = new Date(this.value);
-        });
-
-        function showPieChart(viewType) {
-            fetch('/api/budget')
-                .then(response => response.json())
-                .then(data => {
-                    const filtered = data.filter(item => {
-                        const itemDate = new Date(item.date);
-                        if (viewType === 'day') {
-                            return itemDate.toDateString() === selectedDate.toDateString();
-                        } else if (viewType === 'month') {
-                            return itemDate.getMonth() === selectedDate.getMonth() &&
-                                itemDate.getFullYear() === selectedDate.getFullYear();
-                        } else {
-                            return itemDate.getFullYear() === selectedDate.getFullYear();
-                        }
-                    });
-
-                    let incomeTotal = 0, expenseTotal = 0;
-                    const categoryExpenses = {};
-
-                    filtered.forEach(item => {
-                        if (item.type === 'income') {
-                            incomeTotal += item.amount;
-                        } else {
-                            expenseTotal += item.amount;
-                            categoryExpenses[item.category] = (categoryExpenses[item.category] || 0) + item.amount;
-                        }
-                    });
-
-                    renderIncomeExpenseChart(incomeTotal, expenseTotal);
-                    renderCategoryExpenseChart(categoryExpenses);
-                    renderLine(filtered);
-                });
-        }
-
-        let incomeExpenseInstance, categoryExpenseInstance, lineInstance;
-
-        function renderIncomeExpenseChart(income, expense) {
-            const ctx = document.getElementById('incomeExpenseChart').getContext('2d');
-            if (incomeExpenseInstance) incomeExpenseInstance.destroy();
-            incomeExpenseInstance = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: ['Income', 'Expense'],
-                    datasets: [{
-                        data: [income, expense],
-                        backgroundColor: ['#4CAF50', '#FF6384']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 10,
-                            bottom: 20
-                        }
-                    },
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Income vs Expense',
-                            font: {
-                                size: 16
-                            },
-                            padding: {
-                                bottom: 15
-                            }
-                        },
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                boxWidth: 20,
-                                padding: 15
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        function renderCategoryExpenseChart(categoryData) {
-            const ctx = document.getElementById('categoryExpenseChart').getContext('2d');
-            if (categoryExpenseInstance) categoryExpenseInstance.destroy();
-            categoryExpenseInstance = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(categoryData),
-                    datasets: [{
-                        data: Object.values(categoryData),
-                        backgroundColor: [
-                            '#FF6384', '#36A2EB', '#FFCE56',
-                            '#8E44AD', '#4BC0C0', '#E7E9ED', '#2ECC71', '#F39C12'
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 10,
-                            bottom: 20
-                        }
-                    },
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Expenses by Category',
-                            font: {
-                                size: 16
-                            },
-                            padding: {
-                                bottom: 15
-                            }
-                        },
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                boxWidth: 12,
-                                padding: 15
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        function renderLine(data) {
-            const grouped = {};
-            data.forEach(item => {
-                const dateStr = item.date;
-                grouped[dateStr] = (grouped[dateStr] || 0) + (item.type === 'expense' ? -item.amount : item.amount);
-            });
-
-            const labels = Object.keys(grouped).sort();
-            const values = labels.map(label => grouped[label]);
-
-            const ctx = document.getElementById('lineChart').getContext('2d');
-            if (lineInstance) lineInstance.destroy();
-            lineInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels,
-                    datasets: [{
-                        label: 'Net Amount',
-                        data: values,
-                        fill: false,
-                        borderColor: '#007bff',
-                        backgroundColor: 'rgba(0, 123, 255, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.1,
-                        pointRadius: 3,
-                        pointHoverRadius: 5
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Net Amount Over Time',
-                            font: {
-                                size: 16
-                            }
-                        },
-                        legend: {
-                            position: 'top'
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: {
-                                display: true,
-                                color: 'rgba(0,0,0,0.05)'
-                            },
-                            ticks: {
-                                maxRotation: 45,
-                                minRotation: 45
-                            }
-                        },
-                        y: {
-                            grid: {
-                                display: true,
-                                color: 'rgba(0,0,0,0.05)'
-                            },
-                            beginAtZero: false
-                        }
-                    }
-                }
-            });
-        }
-        window.onload = function() {
-            showPieChart('month');
-        };
-    </script>
+    <script type="module" src="{{ url_for('static', filename='visualizer_budget.js') }}"></script>
 </body>
 </html>
