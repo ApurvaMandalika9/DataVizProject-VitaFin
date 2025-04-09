@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, jsonify
 import json
+from budgetapi import budget_api
 
 app = Flask(__name__)
+app.register_blueprint(budget_api, url_prefix='/api/budget') # Register budget API blueprint
 
 # Paths to each data file
 HEALTH_FILE = 'health.json'
