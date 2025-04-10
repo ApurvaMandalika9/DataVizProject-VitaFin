@@ -1055,5 +1055,138 @@
         "category": "apparel",
         "description": "Apparel expense",
         "amount": 27.35
+    },
+    {
+        "date": "2025-04-01",
+        "type": "income",
+        "category": "salary",
+        "description": "Monthly Salary",
+        "amount": 4172
+    },
+    {
+        "date": "2025-04-01",
+        "type": "expense",
+        "category": "apparel",
+        "description": "Apparel expense",
+        "amount": 29.28
+    },
+    {
+        "date": "2025-04-01",
+        "type": "expense",
+        "category": "transportation",
+        "description": "Transportation expense",
+        "amount": 49.31
+    },
+    {
+        "date": "2025-04-01",
+        "type": "expense",
+        "category": "other",
+        "description": "Other expense",
+        "amount": 24.15
+    },
+    {
+        "date": "2025-04-02",
+        "type": "expense",
+        "category": "food",
+        "description": "Food expense",
+        "amount": 36.44
+    },
+    {
+        "date": "2025-04-03",
+        "type": "expense",
+        "category": "food",
+        "description": "Food expense",
+        "amount": 65.79
+    },
+    {
+        "date": "2025-04-03",
+        "type": "expense",
+        "category": "other",
+        "description": "Other expense",
+        "amount": 73.11
+    },
+    {
+        "date": "2025-04-04",
+        "type": "expense",
+        "category": "other",
+        "description": "Other expense",
+        "amount": 40.42
+    },
+    {
+        "date": "2025-04-04",
+        "type": "expense",
+        "category": "transportation",
+        "description": "Transportation expense",
+        "amount": 39.88
+    },
+    {
+        "date": "2025-04-05",
+        "type": "expense",
+        "category": "food",
+        "description": "Food expense",
+        "amount": 135.44
+    },
+    {
+        "date": "2025-04-06",
+        "type": "expense",
+        "category": "other",
+        "description": "Other expense",
+        "amount": 53.14
+    },
+    {
+        "date": "2025-04-07",
+        "type": "expense",
+        "category": "apparel",
+        "description": "Apparel expense",
+        "amount": 121.3
+    },
+    {
+        "date": "2025-04-08",
+        "type": "expense",
+        "category": "transportation",
+        "description": "Transportation expense",
+        "amount": 66.96
+    },
+    {
+        "date": "2025-04-08",
+        "type": "expense",
+        "category": "apparel",
+        "description": "Apparel expense",
+        "amount": 30.65
+    },
+    {
+        "date": "2025-04-08",
+        "type": "expense",
+        "category": "food",
+        "description": "Food expense",
+        "amount": 25.38
+    },
+    {
+        "date": "2025-04-09",
+        "type": "expense",
+        "category": "other",
+        "description": "Other expense",
+        "amount": 40.63
+    },
+    {
+        "date": "2025-04-09",
+        "type": "expense",
+        "category": "apparel",
+        "description": "Apparel expense",
+        "amount": 21.5
+    },
+    {
+        "date": "2025-04-09",
+        "type": "expense",
+        "category": "food",
+        "description": "Food expense",
+        "amount": 49.16
+    },
+    {
+        "date": "2025-04-10",
+        "type": "expense",
+        "category": "household",
+        "description": "Household expense",
+        "amount": 68.33
     }
 ]
