@@ -628,5 +628,75 @@
         "heart_rate": 80,
         "sleep_hours": 6.7,
         "bmi": 27.6
+    },
+    {
+        "date": "2025-04-01",
+        "steps": 4446,
+        "heart_rate": 83,
+        "sleep_hours": 8.4,
+        "bmi": 27.6
+    },
+    {
+        "date": "2025-04-02",
+        "steps": 8571,
+        "heart_rate": 89,
+        "sleep_hours": 6.1,
+        "bmi": 27.5
+    },
+    {
+        "date": "2025-04-03",
+        "steps": 6482,
+        "heart_rate": 84,
+        "sleep_hours": 6.1,
+        "bmi": 27.6
+    },
+    {
+        "date": "2025-04-04",
+        "steps": 7513,
+        "heart_rate": 84,
+        "sleep_hours": 7.5,
+        "bmi": 27.5
+    },
+    {
+        "date": "2025-04-05",
+        "steps": 7178,
+        "heart_rate": 62,
+        "sleep_hours": 8.5,
+        "bmi": 27.4
+    },
+    {
+        "date": "2025-04-06",
+        "steps": 5916,
+        "heart_rate": 65,
+        "sleep_hours": 7.8,
+        "bmi": 27.4
+    },
+    {
+        "date": "2025-04-07",
+        "steps": 11040,
+        "heart_rate": 60,
+        "sleep_hours": 5.7,
+        "bmi": 27.3
+    },
+    {
+        "date": "2025-04-08",
+        "steps": 6387,
+        "heart_rate": 85,
+        "sleep_hours": 6.0,
+        "bmi": 27.4
+    },
+    {
+        "date": "2025-04-09",
+        "steps": 11678,
+        "heart_rate": 72,
+        "sleep_hours": 6.1,
+        "bmi": 27.3
+    },
+    {
+        "date": "2025-04-10",
+        "steps": 9383,
+        "heart_rate": 66,
+        "sleep_hours": 8.0,
+        "bmi": 27.3
     }
 ]
