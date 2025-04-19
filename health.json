@@ -698,5 +698,68 @@
         "heart_rate": 66,
         "sleep_hours": 8.0,
         "bmi": 27.3
+    },
+    {
+        "date": "2025-04-11",
+        "steps": 5914,
+        "heart_rate": 64,
+        "sleep_hours": 7.0,
+        "bmi": 27.3
+    },
+    {
+        "date": "2025-04-12",
+        "steps": 4583,
+        "heart_rate": 63,
+        "sleep_hours": 8.9,
+        "bmi": 27.2
+    },
+    {
+        "date": "2025-04-13",
+        "steps": 10796,
+        "heart_rate": 84,
+        "sleep_hours": 6.4,
+        "bmi": 27.3
+    },
+    {
+        "date": "2025-04-14",
+        "steps": 8432,
+        "heart_rate": 85,
+        "sleep_hours": 7.8,
+        "bmi": 27.3
+    },
+    {
+        "date": "2025-04-15",
+        "steps": 5499,
+        "heart_rate": 86,
+        "sleep_hours": 6.9,
+        "bmi": 27.2
+    },
+    {
+        "date": "2025-04-16",
+        "steps": 7122,
+        "heart_rate": 84,
+        "sleep_hours": 7.4,
+        "bmi": 27.3
+    },
+    {
+        "date": "2025-04-17",
+        "steps": 10114,
+        "heart_rate": 69,
+        "sleep_hours": 7.0,
+        "bmi": 27.4
+    },
+    {
+        "date": "2025-04-18",
+        "steps": 8184,
+        "heart_rate": 71,
+        "sleep_hours": 7.4,
+        "bmi": 27.3
+    },
+    {
+        "date": "2025-04-19",
+        "steps": 6120,
+        "heart_rate": 68,
+        "sleep_hours": 5.8,
+        "bmi": 27.3
     }
 ]
