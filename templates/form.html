@@ -1,3 +1,4 @@
+<!-- This is the HTML template for the data entry form in the application. The form is styled with CSS and includes JavaScript for interactivity -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VitaFin - Data Entry Form</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Embedded Styles -->
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -98,12 +100,12 @@
 <body>
     <div class="container">
         <h1>Data Entry Form</h1>
-        
+        <!-- Two tabs for health and budget data entry -->
         <div class="form-tabs">
             <button class="tab-button active" onclick="showForm('health')">Health Data</button>
             <button class="tab-button" onclick="showForm('budget')">Budget Data</button>
         </div>
-        
+        <!-- Health data entry form with fields for date, weight, height, steps, heart rate, and sleep hours -->
         <div id="health-form" class="form-section active">
             <form id="health-data-form">
                 <div class="form-group">
@@ -135,11 +137,12 @@
                     <label for="sleep">Sleep (hours):</label>
                     <input type="number" id="sleep" name="sleep" step="0.1" required>
                 </div>
-                
+                <!-- Submit button for health data -->
                 <button type="button" id="healthSubmitBtn">Submit Health Data</button>
             </form>
         </div>
         
+        <!-- Budget data entry form with fields for date, type (income/expense), category, amount, and description -->
         <div id="budget-form" class="form-section">
             <form id="budget-data-form">
                 <div class="form-group">
@@ -182,13 +185,16 @@
             </form>
         </div>
         
+        <!-- Returning to the home page after data submission -->
         <a href="{{ url_for('index') }}" class="back-link">
             <button>Back to Home</button>
         </a>
     </div>
 
+    <!-- JavaScript to handle form submission and validation -->
     <script src="{{ url_for('static', filename='form-handler.js') }}"></script>
     <script>
+        // JavaScript to handle form switching
         function showForm(formType) {
             document.querySelectorAll('.form-section').forEach(form => {
                 form.classList.remove('active');
@@ -200,6 +206,7 @@
             event.target.classList.add('active');
         }
         
+        // JavaScript to toggle category selection based on type selection
         function toggleCategory() {
             const typeSelect = document.getElementById('budget-type');
             const categorySelect = document.getElementById('category');
