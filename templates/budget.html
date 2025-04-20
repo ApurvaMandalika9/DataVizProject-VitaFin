@@ -1,9 +1,10 @@
+<!-- View page for Budget section -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Budget Tracking Dashboard</title>
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+    <!-- using chart.js and Vue.js for data visualization and interactivity -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Using Vue.js Framework -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
@@ -123,10 +124,11 @@
 <body>
     <div id="app" class="container">
         <h1>Budget Tracking Dashboard</h1>
-
+        <!-- Budget dashboard to visualize income and expenses over time, and see how they are categorized -->
         <div class="dashboard">
             <div class="calendar-container">
                 <input type="date" id="calendar" :value="calendarValue" @change="onCalendarChange" />
+                <!-- three buttons to switch between day, month, and year views -->
                 <div class="view-buttons">
                     <button @click="fetchBudgetData('day')">Day</button>
                     <button @click="fetchBudgetData('month')">Month</button>
@@ -134,6 +136,7 @@
                 </div>
             </div>
 
+            <!-- Three charts to visualize the budget data: IncomeExpense, Expense Category,Line chart -->
             <div class="charts-container">
                 <div class="chart-wrapper pie-chart-wrapper">
                     <canvas id="incomeExpenseChart"></canvas>
@@ -147,11 +150,13 @@
             </div>
         </div>
 
+        <!-- Returning to home page: -->
         <a href="{{ url_for('index') }}">
             <button class="back-button">Back to Home</button>
         </a>
     </div>
 
+    <!-- Linking the JavaScript file for the budget visualizer: -->
     <script type="module" src="{{ url_for('static', filename='visualizer_budget.js') }}"></script>
 </body>
 </html>

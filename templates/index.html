@@ -1,3 +1,4 @@
+<!-- Landing Page for VitaFin application -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,9 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>VitaFin : Health & Budget Tracker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Using Vue.js framework -->
     <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.prod.js"></script>
 </head>
 
+<!-- Using embedded styles for the navbar -->
 <style>
     .navbar-custom {
         background-color: #004a7c;
@@ -31,6 +34,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>VitaFin</title>
+        <!-- Using Embedded Styles -->
         <style>
             body {
                 font-family: 'Arial', sans-serif;
@@ -88,9 +92,11 @@
     </head>
     <body>
         <div class="container">
+            <!-- welcome messages in home page -->
             <h1>Welcome to VitaFin Homepage</h1>
             <h2>Your One-Stop Solution for Managing Wellness</h2>
             <h2>Discover the Easiest Way to Keep Track of Your Health and Budget</h2>
+            <!-- linking health and budget views to respective buttons -->
             <div class="button-container">
                 <a href="{{ url_for('health') }}">
                     <button class="health-button">Health</button>
@@ -100,7 +106,7 @@
                 </a>
             </div>
 
-        
+            <!-- linking form button to input, health and budget details -->
             <h2>Provide Input Data using the form: </h2>
             <div class="button-container">
                 <a href="{{ url_for('form') }}">
