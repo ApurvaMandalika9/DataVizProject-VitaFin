@@ -1,13 +1,18 @@
-// For handling health form submissions
+// Handling health form submissions
+
+// Adding click event listener to the health form submit button
 document.getElementById('healthSubmitBtn')?.addEventListener('click', () => {
     const form = document.getElementById('health-data-form');
 
+    // Extracting and parsing form input values
     const weight = parseFloat(document.getElementById('weight').value);
     const heightCm = parseFloat(document.getElementById('height').value);
     const heightM = heightCm / 100; // convert to meters
 
+    // Calculating BMI and round to 2 decimal places
     const bmi = +(weight / (heightM * heightM)).toFixed(2); // round to 2 decimals
     
+    // Creating a healthData object containing all the extracted values
     const healthData = {
         date: document.getElementById('health-date').value,
         steps: parseInt(document.getElementById('steps').value),
@@ -17,6 +22,7 @@ document.getElementById('healthSubmitBtn')?.addEventListener('click', () => {
 
     };
     
+    // Sending the health data to the server via a POST request
     fetch('/add-health', {
         method: 'POST',
         headers: {
