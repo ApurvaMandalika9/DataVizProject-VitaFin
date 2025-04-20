@@ -1,4 +1,4 @@
-# Data for health visualizations
+# Data APIs for Health Visualizations
 
 from flask import Blueprint, request, jsonify
 from datetime import datetime
@@ -6,10 +6,14 @@ from collections import defaultdict
 import json
 import os
 
+# Creating a Flask Blueprint for health-related API routes
 health_api = Blueprint('health_api', __name__)
+
+# File paths
 HEALTH_FILE = 'health.json'
 REFERENCE_HEALTH_FILE = 'reference_health.json'
 
+# Loading user health data from HEALTH_FILE. If the file does not exist, create it with an empty list.
 def load_data():
     if not os.path.exists(HEALTH_FILE):
         with open(HEALTH_FILE, 'w') as f:
@@ -17,20 +21,24 @@ def load_data():
     with open(HEALTH_FILE, 'r') as f:
         return json.load(f)
 
+# Loading reference health data from REFERENCE_HEALTH_FILE. If not found, return an empty dictionary.
 def load_reference():
     if not os.path.exists(REFERENCE_HEALTH_FILE):
         return {}
     with open(REFERENCE_HEALTH_FILE, 'r') as f:
         return json.load(f)
 
-@health_api.route('/health', methods=['GET'])
-def get_health():
-    return jsonify(load_data())
-
+# Computing average value for a given key from the reference dataset.
 def compute_reference_average(ref_data, key):
     values = [d[key] for d in ref_data if key in d]
     return round(sum(values) / len(values), 2) if values else None
 
+# API endpoint to retrieve all stored health records.
+@health_api.route('/health', methods=['GET'])
+def get_health():
+    return jsonify(load_data())
+
+# API endpoint to retrieve steps trend data (daily, monthly, or yearly) and reference average steps.
 @health_api.route('/health/steps-trend', methods=['GET'])
 def steps_trend():
     data = load_data()
@@ -84,6 +92,7 @@ def steps_trend():
         "trend": result  
     })
 
+# API endpoint to retrieve heart rate trend data (daily, monthly, or yearly) and reference average heart rate.
 @health_api.route('/health/heart-rate-trend', methods=['GET'])
 def heart_rate_trend():
     data = load_data()
@@ -135,6 +144,7 @@ def heart_rate_trend():
         "trend": result 
     })
 
+# API endpoint to retrieve sleep hours trend data (daily, monthly, or yearly) and reference average sleep hours.
 @health_api.route('/health/sleep-trend', methods=['GET'])
 def sleep_trend():
     data = load_data()
@@ -184,6 +194,7 @@ def sleep_trend():
         "trend": result
     })
 
+# API endpoint to retrieve BMI trend data (daily, monthly, or yearly) and reference average BMI.
 @health_api.route('/health/bmi-trend', methods=['GET'])
 def bmi_trend():
     data = load_data()
