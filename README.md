@@ -23,13 +23,13 @@ and better financial control—all in one place.
 
 
 ## Workflow 
-• Users enter daily health and budget data via a web form
-• Data is stored in JSON files (simulating a database)
-• Visualizations update in real-time via API calls to the backend
-• The user can select a time range and view: daily, monthly, or yearly
-• Summary charts provide insights like trends, net savings, and category breakdowns
-• Each health trend also includes a reference average from standard benchmark data.
-• If the data varies from the benchmark by a threshold, then it is highlighted in red.
+- Users enter daily health and budget data via a web form
+- Data is stored in JSON files (simulating a database)
+- Visualizations update in real-time via API calls to the backend
+- The user can select a time range and view: daily, monthly, or yearly
+- Summary charts provide insights like trends, net savings, and category breakdowns
+- Each health trend also includes a reference average from standard benchmark data.
+- If the data varies from the benchmark by a threshold, then it is highlighted in red.
 
 <p align="center"> 
     <img src="FlowChart.png" alt="Workflow" width="600">
