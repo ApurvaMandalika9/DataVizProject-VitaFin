@@ -1,10 +1,7 @@
 # budgetapi.py
 
-"""
-Flask Blueprint providing API routes for budget data management and visualization.
-Supports expense breakdowns, income-expense comparisons, and net balance trends 
-for driving financial insights on the dashboard.
-"""
+# Flask Blueprint providing API routes for budget data management and visualization.
+# Supports expense breakdowns, income-expense comparisons, and net balance trends for driving financial insights on the dashboard.
 
 from flask import Blueprint, request, jsonify
 from datetime import datetime
@@ -18,33 +15,24 @@ budget_api = Blueprint('budget_api', __name__)
 # Path to the user's financial records file
 BUDGET_FILE = 'budget.json'
 
+# Load user's budget data from the JSON file. If the file does not exist, initialize it with an empty list.
 def load_budget_data():
-    """
-    Load user's budget data from the JSON file.
-    If the file does not exist, initialize it with an empty list.
-    """
     if not os.path.exists(BUDGET_FILE):
         with open(BUDGET_FILE, 'w') as f:
             json.dump([], f)
     with open(BUDGET_FILE, 'r') as f:
         return json.load(f)
 
+# Return all budget entries to the client as JSON. Used for listing all raw financial records.
 @budget_api.route('/budget', methods=['GET'])
 def get_budget():
-    """
-    Return all budget entries to the client as JSON.
-    Used for listing all raw financial records.
-    """
     return jsonify(load_budget_data())
 
 # 1. Expense Distribution by Category: /expense-categories
 
+# Return total expenses grouped by category for a specified date range. Supports pie chart visualization of spending patterns.
 @budget_api.route('/expense-categories', methods=['GET'])
 def expense_category_pie():
-    """
-    Return total expenses grouped by category for a specified date range.
-    Supports pie chart visualization of spending patterns.
-    """
     data = load_budget_data()
     start = request.args.get('start') # Query parameter: start date
     end = request.args.get('end') # Query parameter: end date
@@ -66,12 +54,9 @@ def expense_category_pie():
 
 # 2. Income vs Expense Aggregation: /income-vs-expense
 
+# Return aggregated totals of income and expenses for a given date range. Enables high-level financial comparison through a pie chart.
 @budget_api.route('/income-vs-expense', methods=['GET'])
 def income_vs_expense_pie():
-    """
-    Return aggregated totals of income and expenses for a given date range.
-    Enables high-level financial comparison through a pie chart.
-    """
     data = load_budget_data()
     start = request.args.get('start')
     end = request.args.get('end')
@@ -96,13 +81,9 @@ def income_vs_expense_pie():
 
 # 3. Net Balance Trend Over Time: /net-trend
 
+# Return aggregated totals of income and expenses for a given date range. Enables high-level financial comparison through a pie chart.
 @budget_api.route('/net-trend', methods=['GET'])
 def net_trend():
-    """
-    Return the cumulative net balance (income minus expenses) trend 
-    grouped by day, month, or year, based on the specified view.
-    Supports line graph visualization of financial data over time.
-    """
     data = load_budget_data()
     start_str = request.args.get('start') # Query parameter: start date
     end_str = request.args.get('end') # Query parameter: end date
