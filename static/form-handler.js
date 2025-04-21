@@ -42,14 +42,20 @@ document.getElementById('healthSubmitBtn')?.addEventListener('click', () => {
 });
 
 // For handling budget form submissions
+
+// Adding click event listener to the budget form submit button
 document.getElementById('budgetSubmitBtn')?.addEventListener('click', () => {
     const form = document.getElementById('budget-data-form');
-
+   
+    // Extracting the type of entry (income or expense)
     const type = document.getElementById('budget-type').value;
+
+    // Setting category: if income, category is fixed as 'salary'; else, get user-selected category
     const category = type === 'income' 
         ? 'salary' 
         : document.getElementById('category').value;
 
+    // Creating a budgetData object containing all the extracted values
     const budgetData = {
         date: document.getElementById('budget-date').value,
         type: type,
@@ -58,6 +64,7 @@ document.getElementById('budgetSubmitBtn')?.addEventListener('click', () => {
         amount: parseFloat(document.getElementById('amount').value)
     };
 
+    // Sending the budget data to the server via a POST request
     fetch('/add-budget', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

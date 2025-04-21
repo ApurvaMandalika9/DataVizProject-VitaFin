@@ -9,13 +9,13 @@ from collections import defaultdict
 import os
 import json
 
-# Define a Flask Blueprint for budget APIs
+# Defining a Flask Blueprint for budget APIs
 budget_api = Blueprint('budget_api', __name__)
 
 # Path to the user's financial records file
 BUDGET_FILE = 'budget.json'
 
-# Load user's budget data from the JSON file. If the file does not exist, initialize it with an empty list.
+# Loading user's budget data from the JSON file. If the file does not exist, initialize it with an empty list.
 def load_budget_data():
     if not os.path.exists(BUDGET_FILE):
         with open(BUDGET_FILE, 'w') as f:
@@ -23,38 +23,38 @@ def load_budget_data():
     with open(BUDGET_FILE, 'r') as f:
         return json.load(f)
 
-# Return all budget entries to the client as JSON. Used for listing all raw financial records.
+# Returning all budget entries to the client as JSON. Used for listing all raw financial records.
 @budget_api.route('/budget', methods=['GET'])
 def get_budget():
     return jsonify(load_budget_data())
 
 # 1. Expense Distribution by Category: /expense-categories
 
-# Return total expenses grouped by category for a specified date range. Supports pie chart visualization of spending patterns.
+# Returning total expenses grouped by category for a specified date range. Supports pie chart visualization of spending patterns.
 @budget_api.route('/expense-categories', methods=['GET'])
 def expense_category_pie():
     data = load_budget_data()
     start = request.args.get('start') # Query parameter: start date
     end = request.args.get('end') # Query parameter: end date
 
-    # Filter expenses within the date range
+    # Filtering expenses within the date range
     filtered = [
         entry for entry in data
         if entry["type"] == "expense" and start <= entry["date"] <= end
     ]
 
-    # Aggregate expenses by category
+    # Aggregating expenses by category
     category_totals = defaultdict(float)
     for entry in filtered:
         category_totals[entry["category"]] += entry["amount"]
 
-    # Prepare response for pie chart
+    # Preparing response for pie chart
     result = [{"category": cat, "total": round(amount, 2)} for cat, amount in category_totals.items()]
     return jsonify(result)
 
 # 2. Income vs Expense Aggregation: /income-vs-expense
 
-# Return aggregated totals of income and expenses for a given date range. Enables high-level financial comparison through a pie chart.
+# Returning aggregated totals of income and expenses for a given date range. 
 @budget_api.route('/income-vs-expense', methods=['GET'])
 def income_vs_expense_pie():
     data = load_budget_data()
@@ -64,7 +64,7 @@ def income_vs_expense_pie():
     income = 0
     expense = 0
 
-    # Aggregate income and expenses separately
+    # Aggregating income and expenses separately
     for entry in data:
         if start <= entry["date"] <= end:
             if entry["type"] == "income":
@@ -72,7 +72,7 @@ def income_vs_expense_pie():
             elif entry["type"] == "expense":
                 expense += entry["amount"]
 
-    # Prepare response for pie chart
+    # Preparing response for pie chart
     result = [
         { "type": "income", "total": round(income, 2) },
         { "type": "expense", "total": round(expense, 2) }
@@ -81,7 +81,7 @@ def income_vs_expense_pie():
 
 # 3. Net Balance Trend Over Time: /net-trend
 
-# Return aggregated totals of income and expenses for a given date range. Enables high-level financial comparison through a pie chart.
+# Returning aggregated totals of income and expenses for a given date range. 
 @budget_api.route('/net-trend', methods=['GET'])
 def net_trend():
     data = load_budget_data()
@@ -89,17 +89,17 @@ def net_trend():
     end_str = request.args.get('end') # Query parameter: end date
     view = request.args.get('view', 'daily') # 'daily', 'monthly', or 'yearly'
 
-    # Validate and parse date strings
+    # Validating and parsing date strings
     try:
         start_date = datetime.strptime(start_str, '%Y-%m-%d')
         end_date = datetime.strptime(end_str, '%Y-%m-%d')
     except:
         return jsonify({"error": "Invalid date format. Use YYYY-MM-DD."}), 400
 
-    # Filter entries within the given date range
+    # Filtering entries within the given date range
     data = [d for d in data if start_str <= d["date"] <= end_str]
 
-    # Group entries based on the selected view
+    # Grouping entries based on the selected view
     grouped = defaultdict(lambda: {"income": 0, "expense": 0})
 
     for entry in data:
@@ -114,7 +114,7 @@ def net_trend():
         elif entry["type"] == "expense":
             grouped[key]["expense"] += entry["amount"]
 
-    # Calculate cumulative net balance over time
+    # Calculating cumulative net balance over time
     result = []
     cumulative = 0
     for key in sorted(grouped):
