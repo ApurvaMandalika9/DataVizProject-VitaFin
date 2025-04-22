@@ -761,5 +761,19 @@
         "heart_rate": 68,
         "sleep_hours": 5.8,
         "bmi": 27.3
+    },
+    {
+        "date": "2025-04-20",
+        "steps": 7000,
+        "heart_rate": 85,
+        "sleep_hours": 7,
+        "bmi": 27.3
+    },
+    {
+        "date": "2025-04-21",
+        "steps": 8560,
+        "heart_rate": 80,
+        "sleep_hours": 7.5,
+        "bmi": 27.2
     }
 ]
